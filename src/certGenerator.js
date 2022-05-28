@@ -76,7 +76,7 @@ function generateRootCA(commonName) {
   };
 }
 
-function generateCertsForHostname(domain, rootCAConfig) {
+function generateCertsForHostname(domain, rootCAConfig, requestAttrs = defaultAttrs) {
   // generate a serialNumber for domain
   const md = forge.md.md5.create();
   md.update(domain);
@@ -91,7 +91,7 @@ function generateCertsForHostname(domain, rootCAConfig) {
   // issuer from CA
   cert.setIssuer(caCert.subject.attributes);
 
-  const attrs = defaultAttrs.concat([
+  const attrs = requestAttrs.concat([
     {
       name: 'commonName',
       value: domain
