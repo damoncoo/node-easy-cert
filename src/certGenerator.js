@@ -15,18 +15,19 @@ let defaultAttrs = [
 *
 */
 function getExtensionSAN(domain = '') {
-  const isIpDomain = Util.isIpDomain(domain);
-  if (isIpDomain) {
-    return {
-      name: 'subjectAltName',
-      altNames: [{ type: 7, ip: domain }]
-    };
-  } else {
-    return {
-      name: 'subjectAltName',
-      altNames: [{ type: 2, value: domain }]
-    };
-  }
+  let domains = domain.split(',')
+  let altNames = domains.map((domain) => {
+    const isIpDomain = Util.isIpDomain(domain);
+    if (isIpDomain) {
+      return { type: 2, value: domain }
+    } else {
+      return { type: 2, value: domain }
+    }
+  })
+  return {
+    name: 'subjectAltName',
+    altNames
+  };
 }
 
 function getKeysAndCert(serialNumber) {
