@@ -19,7 +19,7 @@ function getExtensionSAN(domain = '') {
   let altNames = domains.map((domain) => {
     const isIpDomain = Util.isIpDomain(domain);
     if (isIpDomain) {
-      return { type: 2, value: domain }
+      return { type: 2, ip: domain }
     } else {
       return { type: 2, value: domain }
     }
